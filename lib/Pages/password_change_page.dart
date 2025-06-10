@@ -11,12 +11,8 @@ class PasswordChangePage extends StatefulWidget {
 }
 
 class _PasswordChangePageState extends State<PasswordChangePage> {
-
-  TextEditingController p1Controller = TextEditingController();
-  TextEditingController p2Controller = TextEditingController();
-  String? p1Error;
-  String? p2Error;
-
+  String password1 = "";
+  String password2 = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +30,14 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                     //enter password
                     CustomTextField(
                       isNumberController: false,
-                      textController: p1Controller,
                       title: "Enter  Password",
-                      ErrorText: p1Error,
+                      validate: (value){
+                        password1 = value;
+                        if(!checkIfValidPassword(value)){
+                            return "Minimum 8 characters\nAtleast one digit";
+                        }
+                        return null;
+                      },
                       shouldObscure: false,
                     ),
                     SizedBox(height: 32,),
@@ -44,9 +45,14 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                     //confirm password
                     CustomTextField(
                       isNumberController: false,
-                      textController: p2Controller,
                       title: "Confirm  Password",
-                      ErrorText: p2Error,
+                      validate: (value){
+                        password2 = value;
+                        if(password1 != password2){
+                          return "Password doesn't match";
+                        }
+                        return null;
+                      },
                       shouldObscure: true,
                     ),
                     SizedBox(height: 48,),
@@ -54,18 +60,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                     //update password
                     CustomButton(
                       onTap: (){
-                        if(checkIfValidPassword(p1Controller.text)){
-                          setState(() {
-                            p1Error = "Minimum 8 characters\nAtleast one digit";
-                          });
-                        }
-                        else if(p1Controller.text != p2Controller.text){
-                          setState(() {
-                            p2Error = "Password doesn't match";
-                            p1Error = null;
-                          });
-                        }
-                        else{
+                        if(password1 == password2 && checkIfValidPassword(password1)){
                           print('reset/set password!');
                           Navigator.of(context).popUntil(ModalRoute.withName("/"));
                         }

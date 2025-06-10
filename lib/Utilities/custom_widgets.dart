@@ -2,13 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:student_app/Utilities/colors.dart';
 
 class CustomTextField extends StatefulWidget {
-  final TextEditingController textController;
   final bool isNumberController;
   Icon? prefixIcon;
-  String? ErrorText;
+  String? widgetErrorText;
   bool? shouldObscure;
   final String title;
-  CustomTextField({super.key,required this.textController,required this.isNumberController, this.ErrorText,this.prefixIcon, this.shouldObscure,required this.title});
+  String? initialValue;
+  final String? Function(String)? validate;
+
+  CustomTextField({super.key,
+    required this.isNumberController,
+    this.widgetErrorText,
+    this.validate,
+    this.prefixIcon,
+    this.shouldObscure,
+    required this.title,
+    this.initialValue
+  });
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -16,8 +26,19 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
 
+  final TextEditingController textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  String? errorText;
   String? _errorText;
 
+  String textValue = '';
+
+  void updateChanges(){
+    setState(() {
+      errorText = widget.validate!(textValue);
+    });
+  }
   void checkError(String value){
     if(value.isEmpty){
         _errorText = "Can't be empty";
@@ -28,18 +49,33 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   @override
+  void initState(){
+    super.initState();
+    if( widget.initialValue!= null) {
+      textController.text = widget.initialValue!;
+      textValue = widget.initialValue!;
+    }
+    _focusNode.addListener(_onFocusChange);
+  }
+  @override
   void dispose(){
-    widget.textController.dispose();
+    textController.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
+  void _onFocusChange() {
+    if (!_focusNode.hasFocus) {
+      updateChanges();
+    }
+  }
   bool passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
 
     return ValueListenableBuilder(
-        valueListenable: widget.textController, 
+        valueListenable: textController,
         builder: (context, TextEditingValue value, __){
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,24 +91,31 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 width: MediaQuery.sizeOf(context).width/0.2,
                 // height: 20,
                 child: TextFormField(
-
+                  onFieldSubmitted: (_) {
+                    updateChanges();
+                  },
+                  onTapOutside: (_){
+                    updateChanges();
+                  },
+                  focusNode: _focusNode,
                   onChanged: (value){
+                    textValue = value;
                     checkError(value);
-                    widget.ErrorText = null;
+                    errorText = null;
                   },
                   obscureText: (widget.shouldObscure == true)? passwordVisible : false,
-                  controller: widget.textController,
+                  controller: textController,
                   keyboardType: widget.isNumberController? TextInputType.number : TextInputType.text,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red,width: 1.0),
+                      borderSide: BorderSide(width: 1.2),
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
                     enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black26,width: 1.2),
                       borderRadius: BorderRadius.all(Radius.circular(16))
                     ),
-                    errorText: _errorText ?? widget.ErrorText,
+                    errorText: _errorText ?? errorText ?? widget.widgetErrorText,
                     prefixIcon: widget.prefixIcon,
                     suffixIcon: (widget.shouldObscure==true)? IconButton(
                         onPressed: (){

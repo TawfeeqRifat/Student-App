@@ -16,19 +16,13 @@ class PasswordVerifyPage extends StatefulWidget {
 }
 
 class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
-  TextEditingController passwordController = TextEditingController();
-  String? _passwordErrorText;
 
+  String password = "";
+  String? _passwordErrorText;
   late String name;
   void initState(){
     super.initState();
     name = getName(widget.number);
-  }
-
-  @override
-  void dispose(){
-    passwordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -62,9 +56,11 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                         height: 24,
                       ),
                       CustomTextField(
-                          textController: passwordController,
                           isNumberController: false,
-                          ErrorText: _passwordErrorText,
+                          validate: (value){
+                            password = value;
+                          },
+                          widgetErrorText: _passwordErrorText,
                           prefixIcon: Icon(Icons.lock_outline_rounded),
                           shouldObscure: true,
                           title: "Password"
@@ -89,7 +85,7 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                       const SizedBox(height: 32),
                       CustomButton(
                         onTap: (){
-                          if(checkPassword(widget.number,passwordController.text)) {
+                          if(checkPassword(widget.number,password)) {
                             Navigator.push(
                                 context,
                                 CupertinoPageRoute(builder: (context) => HomePage(name: name,))

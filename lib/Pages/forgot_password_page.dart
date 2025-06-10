@@ -16,19 +16,13 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  late TextEditingController numberController = TextEditingController();
-  String? _pnoErrorText;
+
+  String number = '';
 
   @override
   void initState(){
     super.initState();
-    numberController.text = widget.number;
-  }
-
-  @override
-  void dispose(){
-    numberController.dispose();
-    super.dispose();
+    number = widget.number;
   }
 
   @override
@@ -55,33 +49,27 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       CustomTextField(
                         title: "Mobile Number",
                         prefixIcon: Icon(Icons.phone),
-                        textController: numberController,
                         isNumberController: false,
                         shouldObscure: false,
-                        ErrorText: _pnoErrorText,
+                        initialValue: widget.number,
+                        validate: (value){
+                          number = value;
+                          if(!checkIfPhoneNumber(number)){
+                            return "Invalid Mobile Number";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 48,
                       ),
                       CustomButton(
                         onTap: (){
-                          String value = numberController.text;
-                          if(!checkIfPhoneNumber(value)){
-                            setState(() {
-                              _pnoErrorText = "Invalid Mobile Number";
-                            });
-                          }
-                          else if(isExistingUser(value)) {
+                          if(checkIfPhoneNumber(number) && isExistingUser(number)) {
                             Navigator.push(
                                 context,
-                                CupertinoPageRoute(builder: (context) => OtpPage(number: value,setOrReset: "reset",))
+                                CupertinoPageRoute(builder: (context) => OtpPage(number: number,setOrReset: "reset",))
                             );
-                            _pnoErrorText = null;
-                          }
-                          else{
-                            setState(() {
-                              _pnoErrorText = null;
-                            });
                           }
                         },
                         buttonText: "Reset Password",
