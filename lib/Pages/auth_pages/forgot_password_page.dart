@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:student_app/Pages/password_verify_page.dart';
+import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
 
-import '../API/api.dart';
-import '../API/custom_functions.dart';
+import '../../API/api.dart';
+import '../../API/custom_functions.dart';
 import 'otp_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {

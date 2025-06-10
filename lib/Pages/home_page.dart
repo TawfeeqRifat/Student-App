@@ -11,20 +11,61 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int pageIndex = 0;
 
-  final List<Widget> pages = [
-    Container(),
-    Container(),
-    Container(),
-  ];
+  int bottomIndex = 0;
+  late List<Widget> pages;
+  List<String> headlineList = ['Home',"Attendance",'Calendar','Profile'];
+  String headlineText = 'Home';
 
-  bool new_notification = true;
+  @override
+  void initState(){
+    super.initState();
+
+    pages = <Widget>[
+      Container(),
+      Container(),
+      Container(),
+      Container(),
+    ];
+  }
+
+  bool newNotification = true;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
     return Scaffold(
-      bottomNavigationBar: NavBar(context),
+
+      appBar: AppBar(title: Text(headlineText),),
+
+      bottomNavigationBar: NavigationBar(
+        height: 64,
+        onDestinationSelected: (int index){
+          setState(() {
+            bottomIndex = index;
+            headlineText = headlineList[index];
+          });
+        },
+          indicatorColor: AppThemeColor,
+          selectedIndex: bottomIndex,
+        destinations: const<Widget>[
+          NavigationDestination(
+              icon: Icon(Icons.home),
+              label: "Home"
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.add),
+              label: "Attendance"
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.calendar_month),
+              label: "Calendar"
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.person),
+              label: "Profile"
+          ),
+        ]
+      ),
       body: Builder(
         builder: (context) =>
           ProperSizer(
@@ -33,59 +74,61 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: screenHeight/18,),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: Scaffold.of(context).openDrawer,
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 28,
-                            child: Icon(
-                              Icons.person,
-                              size: 42,
-                            ),
-                          ),
-                          const SizedBox(width: 15,),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Welcome,"),
-                              Text(
-                                widget.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    Stack(
-                      children: [
-                        const Icon(
-                          Icons.notifications_none_rounded,
-                          size: 32,
-                        ),
-                        new_notification ? const Positioned(
-                              right: 6,
-                              top: 6,
-                              child: CircleAvatar(
-                                backgroundColor: Color(0xfffed8f7),
-                                radius: 4,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.red,
-                                  radius: 2.5,
-                                ),
-                              )
-                          ) : const SizedBox(),
-                      ]
-                    )
-                  ],
-                )
+
+                //profile and welcome image
+                // Row(
+                //   children: [
+                //     GestureDetector(
+                //       onTap: Scaffold.of(context).openDrawer,
+                //       child: Row(
+                //         children: [
+                //           const CircleAvatar(
+                //             radius: 28,
+                //             child: Icon(
+                //               Icons.person,
+                //               size: 42,
+                //             ),
+                //           ),
+                //           const SizedBox(width: 15,),
+                //           Column(
+                //             mainAxisAlignment: MainAxisAlignment.start,
+                //             crossAxisAlignment: CrossAxisAlignment.start,
+                //             children: [
+                //               const Text("Welcome,"),
+                //               Text(
+                //                 widget.name,
+                //                 style: const TextStyle(
+                //                     fontWeight: FontWeight.w600
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     const Spacer(),
+                //     Stack(
+                //       children: [
+                //         const Icon(
+                //           Icons.notifications_none_rounded,
+                //           size: 32,
+                //         ),
+                //         newNotification ? const Positioned(
+                //               right: 6,
+                //               top: 6,
+                //               child: CircleAvatar(
+                //                 backgroundColor: Color(0xfffed8f7),
+                //                 radius: 4,
+                //                 child: CircleAvatar(
+                //                   backgroundColor: Colors.red,
+                //                   radius: 2.5,
+                //                 ),
+                //               )
+                //           ) : const SizedBox(),
+                //       ]
+                //     )
+                //   ],
+                // )
 
               ],
             ),
@@ -126,12 +169,12 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              drawerTiles(tileName: "Notifications",icon: Icon(Icons.notifications_none_rounded,size: 24,color: Colors.black,)),
-              drawerTiles(
+              DrawerTiles(tileName: "Notifications",icon: Icon(Icons.notifications_none_rounded,size: 24,color: Colors.black,)),
+              DrawerTiles(
                 tileName: "Grade",
                 icon: Image.asset("assets/icons/grade.png",height: 24),
               ),
-              drawerTiles(
+              DrawerTiles(
                 tileName: "Attendance",
                 icon: Image.asset("assets/icons/attendance_icon.png",height: 24),
               )
@@ -142,81 +185,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container NavBar(BuildContext context){
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 0;
-              });
-            },
-            icon:
-            pageIndex == 0
-                ? const Icon(
-              Icons.home_filled,
-              color: Colors.white,
-              size: 35,
-            )
-                : const Icon(
-              Icons.home_outlined,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 1;
-              });
-            },
-            icon:
-            pageIndex == 1
-                ? const Icon(
-              Icons.widgets,
-              color: Colors.white,
-              size: 35,
-            )
-                : const Icon(
-              Icons.widgets_outlined,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 3;
-              });
-            },
-            icon:
-            pageIndex == 3
-                ? const Icon(Icons.person, color: Colors.white, size: 35)
-                : const Icon(
-              Icons.person_outline,
-              color: Colors.white,
-              size: 35,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
-class drawerTiles extends StatelessWidget {
+class DrawerTiles extends StatelessWidget {
   final String tileName;
   final icon;
-  const drawerTiles({super.key,required this.tileName, required this.icon});
+  const DrawerTiles({super.key,required this.tileName, required this.icon});
 
   @override
   Widget build(BuildContext context) {

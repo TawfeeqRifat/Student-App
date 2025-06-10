@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../Utilities/custom_widgets.dart';
+import '../../Utilities/custom_widgets.dart';
 
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});

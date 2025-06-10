@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:student_app/Pages/password_change_page.dart';
+import 'package:student_app/Pages/auth_pages/password_change_page.dart';
 import 'package:student_app/Utilities/colors.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
 
-import '../API/api.dart';
+import '../../API/api.dart';
 
 class OtpPage extends StatefulWidget {
   final setOrReset;
@@ -263,11 +263,17 @@ class _OtpBoxState extends State<OtpBox> {
           decoration: InputDecoration(
             counterText: '',
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: widget.errorMessage==null? Color(0xffE1E1E1) : Colors.redAccent),
+              borderSide: BorderSide(
+                color: widget.errorMessage!=null? Colors.redAccent : _controllers[index].value.text!=''? AppThemeColor : Color(0xffE1E1E1),
+                width: 2
+              ),
+                borderRadius: BorderRadius.circular(8),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppThemeColor),
+              borderSide: BorderSide(color: AppThemeColor,width: 2),
+              borderRadius: BorderRadius.circular(8),
             ),
+
 
           ),
 

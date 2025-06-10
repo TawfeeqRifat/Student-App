@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:student_app/Pages/forgot_password_page.dart';
+import 'package:student_app/Pages/auth_pages/forgot_password_page.dart';
 import 'package:student_app/Pages/home_page.dart';
-import 'package:student_app/Pages/verification_page.dart';
-import '../API/api.dart';
-import '../Utilities/colors.dart';
-import '../Utilities/custom_widgets.dart';
+import 'package:student_app/Pages/auth_pages/verification_page.dart';
+import '../../API/api.dart';
+import '../../Utilities/colors.dart';
+import '../../Utilities/custom_widgets.dart';
 
 class PasswordVerifyPage extends StatefulWidget {
   final String number;
