@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_app/API/api.dart';
 import 'package:student_app/Pages/password_verify_page.dart';
-import 'package:student_app/Pages/reset_password.dart';
+import 'package:student_app/Pages/password_change_page.dart';
 import '../API/custom_functions.dart';
 import '../Utilities/custom_widgets.dart';
 import 'otp_page.dart';
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                  builder: (context) => OtpPage(number: value,resetORset: "set",))
+                                  builder: (context) => OtpPage(number: value,setOrReset: "set",))
                           );
                           setState(() {
                             _pnoErrorText = null;

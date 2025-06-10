@@ -25,7 +25,7 @@ class _CreatePasswordPageState extends State<CreatePasswordPage> {
               children: [
                 SizedBox(height:  MediaQuery.sizeOf(context).height/ 8,),
                 CustomDesignLayout(
-                  message: "Createe Password",
+                  message: "Create Password",
                   withBackButton: false,
                   child: Column(
                     children: [

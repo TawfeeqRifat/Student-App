@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:student_app/API/custom_functions.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
 
-class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+class PasswordChangePage extends StatefulWidget {
+  final String setOrReset;
+  const PasswordChangePage({super.key,required this.setOrReset});
 
   @override
-  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+  State<PasswordChangePage> createState() => _PasswordChangePageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _PasswordChangePageState extends State<PasswordChangePage> {
 
   TextEditingController p1Controller = TextEditingController();
   TextEditingController p2Controller = TextEditingController();
@@ -25,7 +26,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             children: [
               SizedBox(height:  MediaQuery.sizeOf(context).height/ 8,),
               CustomDesignLayout(
-                message: "Reset Password",
+                message: widget.setOrReset=="reset"? "Reset Password" : "Create Password",
                 withBackButton: false,
                 child: Column(
                   children: [
@@ -65,11 +66,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           });
                         }
                         else{
-                          print('reset password');
+                          print('reset/set password!');
                           Navigator.of(context).popUntil(ModalRoute.withName("/"));
                         }
                       },
-                      buttonText: "Update Password",
+                      buttonText: (widget.setOrReset == "reset")? "Update Password" : "Set Password",
 
                     )
                   ],

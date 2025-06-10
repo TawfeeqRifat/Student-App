@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:student_app/Pages/create_password.dart';
-import 'package:student_app/Pages/reset_password.dart';
+import 'package:student_app/Pages/password_change_page.dart';
 import 'package:student_app/Utilities/colors.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
 
 import '../API/api.dart';
 
 class OtpPage extends StatefulWidget {
-  final resetORset;
+  final setOrReset;
   final String number;
-  const OtpPage({super.key,required this.number,required this.resetORset});
+  const OtpPage({super.key,required this.number,required this.setOrReset});
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -20,9 +18,8 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
 
-  // TextEditingController otpController = TextEditingController();
-  String? otpErrorMessage;
 
+  String? otpErrorMessage;
   String _otp = "";
 
   //resend button logic
@@ -99,35 +96,16 @@ class _OtpPageState extends State<OtpPage> {
                             ),
                           ),
                           const SizedBox(height: 32,),
-                          OtpTextField(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            numberOfFields: 5,
-                            showFieldAsBox: true,
-                            borderColor: Color(0xff512da8),
-                            focusedBorderColor: AppThemeColor,
-                            borderRadius: BorderRadius.circular(8),
-                            fieldHeight: 64,
-                            fieldWidth: 58,
-                            borderWidth: 2,
-                            onCodeChanged: (_){
-                              setState(() {
-                                otpErrorMessage = null;
-                              });
+                          OtpBox(
+                            onOtpChanged: (value){
+                              _otp = value;
                             },
-                            onSubmit: (String verificationCode){
-                              _otp = verificationCode;
-                            },
-                            margin: EdgeInsets.symmetric(horizontal: 7),
+                            errorMessage: otpErrorMessage,
                           ),
-                          if(otpErrorMessage!=null)
-                            Text(
-                              otpErrorMessage!,
-                              style: TextStyle(
-                                color: Colors.red,
-                              ),
-                            ),
-
                           SizedBox(height: 16,),
+
+
+                          //resend and timer
                           Row(
                             children: [
 
@@ -168,16 +146,9 @@ class _OtpPageState extends State<OtpPage> {
                             onTap: (){
                               if(checkOTPValidity(_otp)){
                                 Navigator.of(context).pop();
-                                if(widget.resetORset == "reset") {
-                                  Navigator.push(context, CupertinoPageRoute(
-                                    builder: (
-                                        context) => const ResetPasswordPage(),));
-                                }
-                                else{
-                                  Navigator.push(context, CupertinoPageRoute(
-                                    builder: (
-                                        context) => const CreatePasswordPage(),));
-                                }
+                                Navigator.push(context, CupertinoPageRoute(
+                                  builder: (
+                                      context) => PasswordChangePage(setOrReset: widget.setOrReset,),));
                               }
                               else{
                                 setState(() {
@@ -195,6 +166,112 @@ class _OtpPageState extends State<OtpPage> {
             )
         );
       }
+    );
+  }
+}
+
+class OtpBox extends StatefulWidget {
+  final void Function(String) onOtpChanged;
+  String? errorMessage;
+  OtpBox({super.key, required this.onOtpChanged, this.errorMessage});
+
+  @override
+  State<OtpBox> createState() => _OtpBoxState();
+}
+
+class _OtpBoxState extends State<OtpBox> {
+
+  final List<TextEditingController> _controllers = List.generate(5, (_) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(5, (_) => FocusNode());
+
+  String otp = "";
+
+  void onChanged(){
+    otp = "";
+    for (var controller in _controllers) {
+      otp += controller.text;
+    }
+    widget.onOtpChanged(otp);
+  }
+
+
+  @override
+  void dispose(){
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(5, (index){
+            return buildOtpField(index);
+          }),
+        ),
+        if(widget.errorMessage!=null)
+          Column(
+            children: [
+              SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Text(
+                  widget.errorMessage!,
+                  style: TextStyle(
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+      ],
+    );
+  }
+
+  Widget buildOtpField(int index){
+    return SizedBox(
+      width: 50,
+      height: 50,
+        child: TextField(
+          controller: _controllers[index],
+          focusNode: _focusNodes[index],
+          keyboardType: TextInputType.number,
+          textAlign: TextAlign.center,
+          maxLength: 1,
+
+          onChanged: (value){
+            setState(() {
+              widget.errorMessage = null;
+            });
+            if(value.isNotEmpty && index < 4){
+              FocusScope.of(context).requestFocus(_focusNodes[index+1]);
+            }
+            else if(value.isEmpty && index > 0){
+              FocusScope.of(context).requestFocus(_focusNodes[index-1]);
+            }
+            onChanged();
+          },
+          decoration: InputDecoration(
+            counterText: '',
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: widget.errorMessage==null? Color(0xffE1E1E1) : Colors.redAccent),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppThemeColor),
+            ),
+
+          ),
+
+        ),
     );
   }
 }

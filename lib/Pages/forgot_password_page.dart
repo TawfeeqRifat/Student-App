@@ -74,7 +74,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           else if(isExistingUser(value)) {
                             Navigator.push(
                                 context,
-                                CupertinoPageRoute(builder: (context) => OtpPage(number: value,resetORset: "reset",))
+                                CupertinoPageRoute(builder: (context) => OtpPage(number: value,setOrReset: "reset",))
                             );
                             _pnoErrorText = null;
                           }
