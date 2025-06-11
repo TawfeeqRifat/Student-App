@@ -7,7 +7,7 @@ on:
       - test
   push:
     branches:
-      - dev
+      - Main
       - test
 
 jobs:
