@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/password_change_page.dart';
 import 'package:student_app/Utilities/colors.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
@@ -145,10 +147,7 @@ class _OtpPageState extends State<OtpPage> {
                           CustomButton(
                             onTap: (){
                               if(checkOTPValidity(_otp)){
-                                Navigator.of(context).pop();
-                                Navigator.push(context, CupertinoPageRoute(
-                                  builder: (
-                                      context) => PasswordChangePage(setOrReset: widget.setOrReset,),));
+                                Get.off(() => PasswordChangePage(setOrReset: widget.setOrReset,));
                               }
                               else{
                                 setState(() {

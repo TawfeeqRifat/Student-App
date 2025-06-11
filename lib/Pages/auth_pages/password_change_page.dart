@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/API/custom_functions.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
+
+import 'login_page.dart';
 
 class PasswordChangePage extends StatefulWidget {
   final String setOrReset;
@@ -62,7 +66,7 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
                       onTap: (){
                         if(password1 == password2 && checkIfValidPassword(password1)){
                           print('reset/set password!');
-                          Navigator.of(context).popUntil(ModalRoute.withName("/"));
+                          Get.offAll(() => LoginPage());
                         }
                       },
                       buttonText: (widget.setOrReset == "reset")? "Update Password" : "Set Password",

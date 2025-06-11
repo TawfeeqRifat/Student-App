@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Utilities/colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -247,7 +249,7 @@ class CustomDesignLayout extends StatelessWidget {
               top: 0,
               left: 0,
               child: IconButton(
-                onPressed: Navigator.of(context).pop,
+                onPressed: Get.back,
                 icon: const Icon(
                   Icons.arrow_back_ios_sharp,
                   color: Colors.black,

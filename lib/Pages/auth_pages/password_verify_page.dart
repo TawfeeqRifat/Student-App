@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/forgot_password_page.dart';
 import 'package:student_app/Pages/home_page.dart';
-import 'package:student_app/Pages/auth_pages/verification_page.dart';
 import '../../API/api.dart';
 import '../../Utilities/colors.dart';
 import '../../Utilities/custom_widgets.dart';
@@ -70,7 +71,7 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                         alignment: Alignment.centerRight,
                         child: GestureDetector(
                           onTap: (){
-                            Navigator.of(context).push(CupertinoPageRoute(builder: (context) => ForgotPasswordPage(number: widget.number,)));
+                            Get.to( () => ForgotPasswordPage(number: widget.number,),);
                           },
                           child: Text(
                             'Forgot Password?',
@@ -86,10 +87,7 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                       CustomButton(
                         onTap: (){
                           if(checkPassword(widget.number,password)) {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(builder: (context) => HomePage(name: name,))
-                            );
+                            Get.to( () =>  HomePage(name: name,));
                           }
                           else{
                             setState(() {

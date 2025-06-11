@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
 import 'package:student_app/Utilities/custom_widgets.dart';
 
@@ -66,10 +68,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       CustomButton(
                         onTap: (){
                           if(checkIfPhoneNumber(number) && isExistingUser(number)) {
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(builder: (context) => OtpPage(number: number,setOrReset: "reset",))
-                            );
+                            Get.to(() => OtpPage(number: number,setOrReset: "reset",));
                           }
                         },
                         buttonText: "Reset Password",

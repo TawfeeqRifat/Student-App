@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/API/api.dart';
 import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
 import 'package:student_app/Pages/auth_pages/password_change_page.dart';
@@ -61,18 +63,10 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: (){
                         if(!checkIfPhoneNumber(number)) { return; }
                         if(isExistingUser(number)) {
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => PasswordVerifyPage(number: number))
-                          );
+                          Get.to( () => PasswordVerifyPage(number: number));
                         }
                         else{
-                          Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                  builder: (context) => OtpPage(number: number,setOrReset: "set",))
-                          );
+                          Get.to( () => OtpPage(number: number,setOrReset: "set",));
                         }
                       },
                       buttonText: "Continue",

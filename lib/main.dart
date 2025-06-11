@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
+import 'package:student_app/Pages/home_page.dart';
 
 import 'Pages/auth_pages/login_page.dart';
 import 'Utilities/colors.dart';
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Student App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: AppThemeColor),
@@ -28,6 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),
       initialRoute: '/',
+      defaultTransition: Transition.cupertino,
     );
   }
 }
