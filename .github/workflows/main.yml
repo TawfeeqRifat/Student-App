@@ -1,7 +1,7 @@
-name: "Student App"
+name: "Build"
 
 on:
-  pull_requests:
+  pull_request:
     branches:
       - dev
       - test
@@ -12,8 +12,8 @@ on:
 
 jobs:
   build:
-    name: Student App
-    runs-on: android-latest
+    name: Build
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
