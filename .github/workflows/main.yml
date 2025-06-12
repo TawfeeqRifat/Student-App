@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
@@ -55,7 +55,7 @@ jobs:
           path: |
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
-            build/ios_build.tar.gz
+            build/ios_build.tar.gzflutter pub add flutter_launcher_icons
 
       - name: Extract version from pubspec.yaml
         id: extract_version
