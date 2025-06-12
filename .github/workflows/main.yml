@@ -55,7 +55,7 @@ jobs:
           path: |
             build/app/outputs/flutter-apk/app-release.apk
             build/app/outputs/bundle/release/app-release.aab
-            build/ios_build.tar.gzflutter pub add flutter_launcher_icons
+            build/ios_build.tar.gz
 
       - name: Extract version from pubspec.yaml
         id: extract_version
@@ -77,4 +77,3 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
           tag: v${{ env.VERSION }}
-          token: ${{ secrets.TOKEN }}
