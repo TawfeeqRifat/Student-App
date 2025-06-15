@@ -62,8 +62,6 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(32),
                 ),
-                backgroundColor: Colors.white,
-                // showDragHandle: true,
                 context: context,
                 builder: (BuildContext context){
                   return SwitchProfile();
@@ -340,9 +338,9 @@ class SwitchProfile extends StatelessWidget {
           Divider(thickness: 0.5, height: 2,endIndent: 3,),
           SizedBox(height: 8,),
           Container(
-            height: 42,
+            height: 54,
             width: double.infinity,
-            color: Colors.white,
+            color: Colors.white60,
             alignment: Alignment.center,
             child: const Text(
               "Switch Profile",
@@ -353,7 +351,7 @@ class SwitchProfile extends StatelessWidget {
             )
           ),
           SizedBox(
-            height: 240,
+            height: 220,
             child: ListView.separated(
               shrinkWrap: true,
               itemCount: 3,
