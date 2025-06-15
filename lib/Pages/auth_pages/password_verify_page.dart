@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/forgot_password_page.dart';
-import 'package:student_app/Pages/home_page.dart';
+import 'package:student_app/Pages/home_skeleton.dart';
 import '../../API/api.dart';
 import '../../Utilities/colors.dart';
 import '../../Utilities/custom_widgets.dart';
@@ -87,7 +87,7 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                       CustomButton(
                         onTap: (){
                           if(checkPassword(widget.number,password)) {
-                            Get.to( () =>  HomePage(name: name,));
+                            Get.to( () =>  HomeSkeleton(name: name,));
                           }
                           else{
                             setState(() {

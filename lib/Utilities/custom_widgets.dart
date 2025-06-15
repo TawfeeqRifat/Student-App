@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Utilities/colors.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -148,36 +147,58 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60,
-        width: double.infinity,
 
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            color: AppThemeColor,
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(-2, 2),
-                spreadRadius: 2,
-                blurRadius: 2,
-                color: Colors.black12
-              )
-            ]
+    double ScreenWidth = MediaQuery.sizeOf(context).width;
+
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppThemeColor,
+        shadowColor: Colors.black12,
+        fixedSize: Size(
+            ScreenWidth,
+            60
         ),
-        child: Align(
-          alignment: const Alignment(0, 0),
-          child: Text(
-            buttonText,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.w700
-            ),
-          ),
-        ),
+        shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(16)
+        )
       ),
+      child: Text(
+          buttonText,
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.white,
+            fontWeight: FontWeight.w700
+          ),
+        )
+      // child: Container(
+      //   height: 60,
+      //   width: double.infinity,
+      //
+      //   decoration: BoxDecoration(
+      //       borderRadius: BorderRadius.all(Radius.circular(16)),
+      //       color: AppThemeColor,
+      //       // boxShadow: const [
+      //       //   BoxShadow(
+      //       //     offset: Offset(-2, 2),
+      //       //     spreadRadius: 2,
+      //       //     blurRadius: 2,
+      //       //     color: Colors.black12
+      //       //   )
+      //       // ]
+      //   ),
+      //   child: Align(
+      //     alignment: const Alignment(0, 0),
+      //     child: Text(
+      //       buttonText,
+      //       style: const TextStyle(
+      //         fontSize: 16,
+      //         color: Colors.white,
+      //         fontWeight: FontWeight.w700
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

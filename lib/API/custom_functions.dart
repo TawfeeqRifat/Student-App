@@ -1,5 +1,5 @@
 bool checkIfPhoneNumber(value){
-  RegExp re = RegExp(r'^[6-9][0-9]{9}');
+  RegExp re = RegExp(r'^[6-9][0-9]{9}$');
   return re.hasMatch(value);
 }
 

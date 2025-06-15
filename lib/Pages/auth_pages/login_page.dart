@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/API/api.dart';
 import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
-import 'package:student_app/Pages/auth_pages/password_change_page.dart';
 import '../../API/custom_functions.dart';
 import '../../Utilities/custom_widgets.dart';
 import 'otp_page.dart';

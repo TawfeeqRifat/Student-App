@@ -30,8 +30,11 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
-    - assets/icons/attendance_icon.png
     - assets/icons/
 
   uses-material-design: true
 
+  fonts:
+     - family: CustomIcons
+       fonts:
+         - asset: fonts/CustomIcons.ttf
