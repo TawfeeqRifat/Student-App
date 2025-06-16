@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/password_change_page.dart';
 import 'package:student_app/Utilities/colors.dart';
-import 'package:student_app/Utilities/custom_widgets.dart';
+import 'package:student_app/Utilities/Components/custom_widgets.dart';
+import '../../Utilities/Components/custom_button.dart';
+import '../../Utilities/Components/proper_sizer.dart';
 
 import '../../API/api.dart';
 

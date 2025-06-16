@@ -1,15 +1,16 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/login_page.dart';
+import '../API/api.dart';
 import '../Utilities/colors.dart';
-import '../Utilities/custom_widgets.dart';
 import '../custom_icons.dart';
 import '../student_info.dart';
 
 class HomeSkeleton extends StatefulWidget {
-  final String name;
-  const HomeSkeleton({super.key,required this.name});
+  final int index;
+  const HomeSkeleton({super.key,required this.index});
 
   @override
   State<HomeSkeleton> createState() => _HomeSkeletonState();
@@ -22,6 +23,9 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
   List<String> headlineList = ['Home',"Attendance",'Calendar','Profile'];
   String headlineText = 'Home';
 
+  //for holding the user data from the details
+  late Data _currentData;
+
   @override
   void initState(){
     super.initState();
@@ -32,7 +36,19 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
       Container(),
       Container(),
     ];
+
+    //setting the user data
+    _currentData = details[widget.index]!;
+
   }
+
+  //to change the account
+  void changeAccount(int index){
+    setState(() {
+      _currentData = details[index]!;
+    });
+  }
+
 
   bool newNotification = true;
   @override
@@ -64,7 +80,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                 ),
                 context: context,
                 builder: (BuildContext context){
-                  return SwitchProfile();
+                  return SwitchProfile(changeAccount: changeAccount, currentIndex: widget.index,);
                 }
               );
             },
@@ -81,7 +97,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                 children: [
                   CircleAvatar(
                     radius: 16,
-                    backgroundImage: NetworkImage("https://static.vecteezy.com/system/resources/previews/009/354/850/non_2x/male-portrait-people-profile-perfect-for-social-media-and-business-presentations-user-interface-ux-graphic-and-web-design-applications-and-interfaces-illustration-vector.jpg"),
+                    backgroundImage: NetworkImage(_currentData.profileUrl),
                   ),
                   // Spacer(),
                   Icon(Icons.keyboard_arrow_down_rounded)
@@ -163,7 +179,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                       const SizedBox(height: 40),
                       CircleAvatar(
                         radius: 24,
-                        backgroundImage: NetworkImage("https://static.vecteezy.com/system/resources/previews/009/354/850/non_2x/male-portrait-people-profile-perfect-for-social-media-and-business-presentations-user-interface-ux-graphic-and-web-design-applications-and-interfaces-illustration-vector.jpg"),
+                        backgroundImage: NetworkImage(_currentData!.profileUrl),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -173,14 +189,14 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.name,
+                                _currentData.name,
                                 style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700
                                 )
                               ),
                               Text(
-                                "Class IX",
+                                "Class ${_currentData!.std}",
                                 style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -313,14 +329,43 @@ class DrawerTiles extends StatelessWidget {
 
 
 
-class SwitchProfile extends StatelessWidget {
-  const SwitchProfile({super.key});
+class SwitchProfile extends StatefulWidget {
+  final Function(int) changeAccount;
+  final int currentIndex;
+  const SwitchProfile({super.key, required this.changeAccount, required this.currentIndex});
+
+  @override
+  State<SwitchProfile> createState() => _SwitchProfileState();
+}
+
+class _SwitchProfileState extends State<SwitchProfile> {
+
+  late int _selectedIndex;
+
+
+  @override
+  void initState(){
+    _selectedIndex = widget.currentIndex;
+  }
+  // on account changed
+  void accountChanged(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+    widget.changeAccount(index);
+  }
+
+
+  //adding new profile
+  void addProfile(){
+    Get.to( LoginPage());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 320,
+      height: 480,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
 
@@ -350,16 +395,50 @@ class SwitchProfile extends StatelessWidget {
               ),
             )
           ),
+
+          //add profile box
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+            child: IconButton(
+              onPressed: addProfile,
+              icon: DottedBorder(
+                options: RoundedRectDottedBorderOptions(
+                  radius: Radius.circular(16),
+                  dashPattern: [8]
+                ),
+                child: SizedBox(
+                  height: 64,
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      "Add Profile",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Divider( height: 0, thickness: 0.5, ),
           SizedBox(
-            height: 220,
+            height: 280,
             child: ListView.separated(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: details.length,
+
               itemBuilder: (BuildContext context,int index){
                 return ProfileView(
-                    name: details[index]!['name'] ?? "",
-                    std: details[index]!['std'] ?? "",
-                    imageUrl: details[index]!['profileUrl'] ?? ""
+                  name: details[index]!.name,
+                  std: details[index]!.std,
+                  imageUrl: details[index]!.profileUrl,
+                  selectedIndex: _selectedIndex,
+                  currentIndex: index,
+                  onTap: (){
+                    accountChanged(index);
+                  },
                 );
               },
               separatorBuilder: (context, index){
@@ -382,41 +461,58 @@ class ProfileView extends StatelessWidget {
   final String name;
   final String std;
   final String imageUrl;
-  const ProfileView({super.key, required this.name, required this.std, required this.imageUrl});
+  final int selectedIndex;
+  final int currentIndex;
+  final Function() onTap;
+  const ProfileView({super.key, required this.name, required this.std, required this.imageUrl,required this.selectedIndex, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 28,
-              backgroundImage: NetworkImage(imageUrl),
+        padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.8): Colors.transparent,
+            border: Border.all(
+                width: 4,
+                color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.1): Colors.transparent,
             ),
-            SizedBox(width: 16,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+            child: Row(
               children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 15,
-                  ),
+                CircleAvatar(
+                  radius: 28,
+                  backgroundImage: NetworkImage(imageUrl),
                 ),
-                Text(
-                  "Class $std",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: Colors.grey
-                  ),
+                SizedBox(width: 16,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      "Class $std",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Colors.grey
+                      ),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

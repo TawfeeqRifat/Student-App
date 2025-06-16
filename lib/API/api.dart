@@ -33,3 +33,25 @@ bool checkOTPValidity(otp){
   }
   return false;
 }
+
+class Data {
+  late String name;
+  late String profileUrl;
+  late String std;
+
+  void changeData(String name, String profileUrl, String std){
+    this.name = name;
+    this.profileUrl = profileUrl;
+    this.std = std;
+  }
+
+  Data(this.name, this.profileUrl, this.std);
+
+}
+
+int fetchData(String number){
+  Data data = Data(studentInfo[number]!['name']!, studentInfo[number]!['profileUrl']!,studentInfo[number]!['std']!);
+  int index = details.length;
+  details[index] = data;
+  return index;
+}

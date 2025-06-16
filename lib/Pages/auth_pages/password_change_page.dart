@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/API/custom_functions.dart';
-import 'package:student_app/Utilities/custom_widgets.dart';
-
+import 'package:student_app/Utilities/Components/custom_widgets.dart';
+import '../../Utilities/Components/custom_button.dart';
+import '../../Utilities/Components/custom_textfield.dart';
+import '../../Utilities/Components/proper_sizer.dart';
 import 'login_page.dart';
 
 class PasswordChangePage extends StatefulWidget {
