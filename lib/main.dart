@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,7 +9,11 @@ import 'Pages/auth_pages/login_page.dart';
 import 'Utilities/colors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      DevicePreview(
+      builder: (BuildContext context) { return const MyApp(); },
+
+  ));
 }
 
 class MyApp extends StatelessWidget {
