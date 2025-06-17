@@ -21,10 +21,8 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
 
   String password = "";
   String? _passwordErrorText;
-  late String name;
   void initState(){
     super.initState();
-    name = getName(widget.number);
   }
 
   @override
@@ -90,7 +88,7 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                           if(checkPassword(widget.number,password)) {
 
                             int index = fetchData(widget.number);
-                            Get.to( () =>  HomeSkeleton(index: index,));
+                            Get.offAll(() =>  HomeSkeleton(index: index,));
                           }
                           else{
                             setState(() {

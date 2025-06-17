@@ -50,8 +50,6 @@ class Data {
 }
 
 int fetchData(String number){
-  Data data = Data(studentInfo[number]!['name']!, studentInfo[number]!['profileUrl']!,studentInfo[number]!['std']!);
-  int index = details.length;
-  details[index] = data;
-  return index;
+
+  return 0;
 }

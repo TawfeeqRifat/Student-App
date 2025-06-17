@@ -179,7 +179,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                       const SizedBox(height: 40),
                       CircleAvatar(
                         radius: 24,
-                        backgroundImage: NetworkImage(_currentData!.profileUrl),
+                        backgroundImage: NetworkImage(_currentData.profileUrl),
                       ),
                       const SizedBox(height: 16),
                       Row(
@@ -196,7 +196,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                                 )
                               ),
                               Text(
-                                "Class ${_currentData!.std}",
+                                "Class ${_currentData.std}",
                                 style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
@@ -356,16 +356,13 @@ class _SwitchProfileState extends State<SwitchProfile> {
   }
 
 
-  //adding new profile
-  void addProfile(){
-    Get.to( LoginPage());
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 480,
+      height: 360,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(32),
 
@@ -382,49 +379,22 @@ class _SwitchProfileState extends State<SwitchProfile> {
           ),
           Divider(thickness: 0.5, height: 2,endIndent: 3,),
           SizedBox(height: 8,),
-          Container(
+          SizedBox(
             height: 54,
             width: double.infinity,
-            color: Colors.white60,
-            alignment: Alignment.center,
-            child: const Text(
-              "Switch Profile",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+            child: Center(
+              child: const Text(
+                "Switch Profile",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
               ),
             )
           ),
 
-          //add profile box
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-            child: IconButton(
-              onPressed: addProfile,
-              icon: DottedBorder(
-                options: RoundedRectDottedBorderOptions(
-                  radius: Radius.circular(16),
-                  dashPattern: [8]
-                ),
-                child: SizedBox(
-                  height: 64,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      "Add Profile",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Divider( height: 0, thickness: 0.5, ),
           SizedBox(
-            height: 280,
+            height: 270,
             child: ListView.separated(
               shrinkWrap: true,
               itemCount: details.length,
@@ -450,7 +420,7 @@ class _SwitchProfileState extends State<SwitchProfile> {
               },
             ),
           ),
-          SizedBox(height: 8,)
+          SizedBox(height: 4,)
         ],
       ),
     );
@@ -475,10 +445,10 @@ class ProfileView extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.8): Colors.transparent,
+            color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.3): Colors.transparent,
             border: Border.all(
                 width: 4,
-                color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.1): Colors.transparent,
+                color: selectedIndex == currentIndex? AppThemeColor.withValues(alpha: 0.001 ): Colors.transparent,
             ),
           ),
           child: Padding(
