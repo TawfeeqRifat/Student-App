@@ -38,14 +38,17 @@ class Data {
   late String name;
   late String profileUrl;
   late String std;
+  late String section;
+  late String rollno;
 
   void changeData(String name, String profileUrl, String std){
     this.name = name;
     this.profileUrl = profileUrl;
     this.std = std;
+
   }
 
-  Data(this.name, this.profileUrl, this.std);
+  Data(this.name, this.profileUrl, this.std, this.section, this.rollno);
 
 }
 

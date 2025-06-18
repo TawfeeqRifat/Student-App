@@ -1,8 +1,7 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/login_page.dart';
+import 'package:student_app/Pages/profile_page.dart';
 import '../API/api.dart';
 import '../Utilities/colors.dart';
 import '../custom_icons.dart';
@@ -30,15 +29,15 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
   void initState(){
     super.initState();
 
+    //setting the user data
+    _currentData = details[widget.index]!;
+
     pages = <Widget>[
       Container(),
       Container(),
       Container(),
-      Container(),
+      ProfilePage(data: _currentData,),
     ];
-
-    //setting the user data
-    _currentData = details[widget.index]!;
 
   }
 
@@ -49,8 +48,6 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
     });
   }
 
-
-  bool newNotification = true;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.sizeOf(context).height;
