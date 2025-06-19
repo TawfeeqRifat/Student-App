@@ -10,10 +10,10 @@ import 'Utilities/colors.dart';
 
 void main() {
   runApp(
-      DevicePreview(
-      builder: (BuildContext context) { return const MyApp(); },
-
-  ));
+    DevicePreview( builder: (BuildContext context) { return
+          const MyApp();
+        },)
+    );
 }
 
 class MyApp extends StatelessWidget {

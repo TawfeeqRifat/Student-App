@@ -51,8 +51,8 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                       decoration: BoxDecoration(
                         color: AppThemeColor.withValues(alpha: 0.8),
                         borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(32),
-                          bottomLeft: Radius.circular(32)
+                          bottomRight: Radius.circular(256),
+                          bottomLeft: Radius.circular(256)
                         )
                       ),
                     ),
@@ -140,12 +140,23 @@ class InfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-      child: Card(
-        color: Colors.white,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow:[
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: Offset(-5, 5),
+            )
+          ]
+        ),
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical:8  ),
+            padding: const EdgeInsets.symmetric(horizontal: 16,vertical:16  ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 8,
@@ -183,9 +194,11 @@ class InfoContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        width: 150,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: AppThemeColor.withValues(alpha: 0.2)
+            borderRadius: BorderRadius.circular(8),
+            // color: AppThemeColor.withValues(alpha: 0.1)
+          color: Colors.grey.withValues(alpha: 0.2)
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),

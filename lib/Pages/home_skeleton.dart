@@ -153,126 +153,130 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
       ),
 
 
-      drawer: SafeArea(
-        child: Drawer(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(32),bottomRight: Radius.circular(32)),
-            side: BorderSide(color: Colors.grey),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-        
-              //profile box
-              SizedBox(
-                height: screenHeight/5,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 40),
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: NetworkImage(_currentData.profileUrl),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _currentData.name,
-                                style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700
-                                )
-                              ),
-                              Text(
-                                "Class ${_currentData.std}",
-                                style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey
-                                )
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          IconButton(
-                            onPressed: (){
-                              Get.back();
-                            },
-                            icon: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 18,
-                            )
+      drawer: Drawer(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(topRight: Radius.circular(32),bottomRight: Radius.circular(32)),
+          side: BorderSide(color: Colors.grey),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            //profile box
+            SizedBox(
+              height: screenHeight/5,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 40),
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundImage: NetworkImage(_currentData.profileUrl),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _currentData.name,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700
+                              )
+                            ),
+                            Text(
+                              "Class ${_currentData.std}",
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey
+                              )
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: (){
+                            Get.back();
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 24,
                           )
-                        ],
-                      )
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Divider(thickness: 1.5,),
+
+
+            //drawer buttons
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 8,
+                children: [
+                  DrawerTiles(tileName: "Dashboard", icon: CustomIcons.dashboard, onPressed: () {  },),
+                  DrawerTiles(tileName: "TimeTable", icon: CustomIcons.timetable, onPressed: () {  },),
+                  DrawerTiles(tileName: "Attendance", icon: CustomIcons.attendance, onPressed: () {  },),
+                  DrawerTiles(tileName: "Announcements", icon: CustomIcons.announcements, onPressed: () {  },),
+                  DrawerTiles(tileName: "Notifications", icon: Icons.notifications_none_rounded, onPressed: () {  },),
+                  DrawerTiles(tileName: "Study Material", icon: CustomIcons.study, onPressed: () {  }, iconSize: 22,),
+                  DrawerTiles(tileName: "Contact Information", icon: Icons.phone_outlined, onPressed: () {  },)
+                ],
+              ),
+            ),
+
+            Spacer(),
+            Divider(thickness: 1.5,),
+
+            //preferences tab
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 2,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
+                    child: Text(
+                      "Preferences",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18
+                      ),
+                    ),
+                  ),
+                  Column(
+                    spacing: 4,
+                    children: [
+                      DrawerTiles(tileName: "Settings", icon: Icons.settings, onPressed: () {  },),
+                      DrawerTiles(tileName: "Help", icon: Icons.help_outline, onPressed: () {  },),
+                      DrawerTiles(tileName: "Logout", icon: Icons.logout, iconColor: Colors.redAccent, fontColor: Colors.redAccent,
+                        onPressed: () {
+                          Get.offAll(LoginPage());
+                        },
+                      ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 8,)
+                ],
               ),
-              Divider(thickness: 1.5,),
-        
-        
-              //drawer buttons
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DrawerTiles(tileName: "Dashboard", icon: CustomIcons.dashboard, onPressed: () {  },),
-                    DrawerTiles(tileName: "TimeTable", icon: CustomIcons.timetable, onPressed: () {  },),
-                    DrawerTiles(tileName: "Attendance", icon: CustomIcons.attendance, onPressed: () {  },),
-                    DrawerTiles(tileName: "Announcements", icon: CustomIcons.announcements, onPressed: () {  },),
-                    DrawerTiles(tileName: "Notifications", icon: Icons.notifications_none_rounded, onPressed: () {  },),
-                    DrawerTiles(tileName: "Study Material", icon: CustomIcons.study, onPressed: () {  }, iconSize: 22,),
-                    DrawerTiles(tileName: "Contact Information", icon: Icons.phone_outlined, onPressed: () {  },)
-                  ],
-                ),
-              ),
-        
-              Spacer(),
-              Divider(thickness: 1.5,),
-        
-              //preferences tab
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 8),
-                      child: Text(
-                        "Preferences",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14
-                        ),
-                      ),
-                    ),
-                    DrawerTiles(tileName: "Settings", icon: Icons.settings, onPressed: () {  },),
-                    DrawerTiles(tileName: "Help", icon: Icons.help_outline, onPressed: () {  },),
-                    DrawerTiles(tileName: "Logout", icon: Icons.logout, iconColor: Colors.redAccent, fontColor: Colors.redAccent,
-                      onPressed: () {
-                        Get.offAll(LoginPage());
-                      },
-                    ),
-                    SizedBox(height: 8,)
-                  ],
-                ),
-              )
-            ],
-          )
-        ),
+            )
+          ],
+        )
       )
     );
   }
@@ -305,14 +309,14 @@ class DrawerTiles extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: iconSize ?? 24,
+              size: iconSize ?? 26,
               color: iconColor ?? Color(0xff262E3D),
             ),
             SizedBox(width: 18,),
             Text(
               tileName,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 color: fontColor ?? Colors.black,
                 fontWeight: FontWeight.w500
               ),
