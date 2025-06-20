@@ -99,32 +99,59 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
               InfoBox(
                 title: "Personal Information",
                 children: [
-                  InfoContainer(title: "DOB", value: "15/7/2006"),
-                  InfoContainer(title: "Gender", value: "Male"),
-                  InfoContainer(title: "Blood Group", value: "O+"),
-                  InfoContainer(title: "Nationality", value: "Indian"),
-                  InfoContainer(title: "Religion", value: "Hindu"),
-                  InfoContainer(title: "Mother Tongue", value: "Hindi")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InfoContainer(title: "DOB", value: "15/7/2006",width: 150,),
+                      InfoContainer(title: "Gender", value: "Male",width: 150,),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InfoContainer(title: "Blood Group", value: "O+",width: 150,),
+                      InfoContainer(title: "Nationality", value: "Indian",width: 150,),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InfoContainer(title: "Religion", value: "Hindu",width: 150,),
+                      InfoContainer(title: "Mother Tongue", value: "Hindi",width: 150,)
+                    ],
+                  )
                 ]
               ),
               InfoBox(
                 title: "Contact Information",
                   children: [
-                    InfoContainer(title: "Address", value: "123,\nMain Street,\nNew Delhi, India"),
+                    InfoContainer(title: "Address", value: "123, Main Street,\nNew Delhi, India"),
                     InfoContainer(title: "Phone Number", value: "+91 9876543210"),
                     InfoContainer(title: "Email", value: "aaravsharma@gmail.com")
                   ]
               ),
               InfoBox(
-                  title: "Academic Information",
-                  children: [
-                    InfoContainer(title: "Class", value: "10"),
-                    InfoContainer(title: "Roll Number", value: "23"),
-                    InfoContainer(title: "Admission Number", value: "12345"),
-                    InfoContainer(title: "Academic Year", value: "2023-2024")
-                  ]
+                title: "Academic Information",
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InfoContainer(title: "Class", value: "10",width: 150,),
+                      InfoContainer(title: "Roll Number", value: "23",width: 150,),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InfoContainer(title: "Admission Number", value: "12345",width: 150,),
+                      InfoContainer(title: "Academic Year", value: "2023-2024",width: 150,)
+                    ],
+                  )
+                ]
               ),
-
+              SizedBox(
+                height: 32,
+              )
             ],
           ),
         ),
@@ -172,10 +199,9 @@ class InfoBox extends StatelessWidget {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 16,
-                    alignment: WrapAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 16,
                     children: children,
                   ),
                 )
@@ -191,12 +217,13 @@ class InfoBox extends StatelessWidget {
 class InfoContainer extends StatelessWidget {
   final String title;
   final String value;
-  const InfoContainer({super.key, required this.title, required this.value});
+  final double? width;
+  const InfoContainer({super.key, required this.title, required this.value, this.width});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 150,
+        width: width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             // color: AppThemeColor.withValues(alpha: 0.1)
@@ -211,14 +238,16 @@ class InfoContainer extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
                 ),
               ),
               Divider(
-                height: 4,
-                radius: BorderRadiusGeometry.circular(8),
+                  height: 10,
+                  // endIndent: 10,
+                  radius: BorderRadiusGeometry.circular(8),
               ),
+              SizedBox(height: 4,),
               Text(
                 value,
                 style: TextStyle(
