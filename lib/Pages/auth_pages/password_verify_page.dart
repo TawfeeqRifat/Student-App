@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:student_app/Pages/auth_pages/forgot_password_page.dart';
-import 'package:student_app/Pages/home_page.dart';
+import 'package:student_app/Pages/home_skeleton.dart';
 import '../../API/api.dart';
 import '../../Utilities/colors.dart';
-import '../../Utilities/custom_widgets.dart';
+import '../../Utilities/Components/custom_widgets.dart';
+import '../../Utilities/Components/custom_button.dart';
+import '../../Utilities/Components/custom_textfield.dart';
+import '../../Utilities/Components/proper_sizer.dart';
 
 class PasswordVerifyPage extends StatefulWidget {
   final String number;
@@ -20,10 +21,8 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
 
   String password = "";
   String? _passwordErrorText;
-  late String name;
   void initState(){
     super.initState();
-    name = getName(widget.number);
   }
 
   @override
@@ -87,7 +86,9 @@ class _PasswordVerifyPageState extends State<PasswordVerifyPage> {
                       CustomButton(
                         onTap: (){
                           if(checkPassword(widget.number,password)) {
-                            Get.to( () =>  HomePage(name: name,));
+
+                            int index = fetchData(widget.number);
+                            Get.offAll(() =>  HomeSkeleton(index: index,));
                           }
                           else{
                             setState(() {

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:student_app/Utilities/colors.dart';
 
 class CustomTextField extends StatefulWidget {
   final bool isNumberController;
@@ -43,10 +40,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
   void checkError(String value){
     if(value.isEmpty){
-        _errorText = "Can't be empty";
+      _errorText = "Can't be empty";
     }
     else{
-        _errorText = null;
+      _errorText = null;
     }
   }
 
@@ -85,8 +82,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
               Text(
                 widget.title,
                 style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16
                 ),
               ),
               Container(
@@ -114,21 +111,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
                     enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black26,width: 1.2),
-                      borderRadius: BorderRadius.all(Radius.circular(16))
+                        borderSide: BorderSide(color: Colors.black26,width: 1.2),
+                        borderRadius: BorderRadius.all(Radius.circular(16))
                     ),
                     errorText: _errorText ?? errorText ?? widget.widgetErrorText,
                     prefixIcon: widget.prefixIcon,
                     suffixIcon: (widget.shouldObscure==true)? IconButton(
-                        onPressed: (){
-                            setState(() {
-                              passwordVisible = !passwordVisible;
-                            });
-                        },
-                        icon: Icon(
-                          passwordVisible? Icons.visibility :Icons.visibility_off,
-                          color: Colors.black26,
-                        ),
+                      onPressed: (){
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                        });
+                      },
+                      icon: Icon(
+                        passwordVisible? Icons.visibility :Icons.visibility_off,
+                        color: Colors.black26,
+                      ),
                     ): null,
                   ),
 
@@ -141,127 +138,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 }
 
-class CustomButton extends StatelessWidget {
-  final String buttonText;
-  final Function() onTap;
-  const CustomButton({super.key,required this.buttonText,required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 60,
-        width: double.infinity,
-
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-            color: AppThemeColor,
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(-2, 2),
-                spreadRadius: 2,
-                blurRadius: 2,
-                color: Colors.black12
-              )
-            ]
-        ),
-        child: Align(
-          alignment: const Alignment(0, 0),
-          child: Text(
-            buttonText,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.white,
-              fontWeight: FontWeight.w700
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProperSizer extends StatelessWidget {
-  final Widget child;
-  const ProperSizer({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.sizeOf(context).height;
-    return SizedBox(
-      height: double.infinity,
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SingleChildScrollView(
-          clipBehavior: Clip.none,
-          child: SizedBox(
-            height: screenHeight,
-            child: Center(
-              child: child,
-            ),
-          )
-        ),
-      ),
-    );
-  }
-}
-
-class CustomDesignLayout extends StatelessWidget {
-  final String message;
-  final Widget child;
-  final bool withBackButton;
-  const CustomDesignLayout({super.key, required this.message, required this.child,required this.withBackButton});
-
-  @override
-  Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.sizeOf(context).width;
-    return Container(
-      width: screenWidth/0.2,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Column(
-            children: [
-              Text(
-                message,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppThemeColor,
-                  fontSize: 20,
-                ),
-              ),
-              SizedBox(
-                width: screenWidth/2.4,
-                child: Divider(
-                  thickness: 4,
-                  radius: BorderRadius.circular(32),
-                  color: AppThemeColor,
-                ),
-              ),
-              SizedBox(height: 48,),
-              child,
-            ],
-          ),
-          if(withBackButton == true)
-            Positioned(
-              top: 0,
-              left: 0,
-              child: IconButton(
-                onPressed: Get.back,
-                icon: const Icon(
-                  Icons.arrow_back_ios_sharp,
-                  color: Colors.black,
-                  size: 24,
-                ),
-              )
-            ),
-        ],
-      ),
-    );
-  }
-}
 
 class DisabledTextField extends StatelessWidget {
   final Icon prefixIcon;
@@ -278,9 +154,9 @@ class DisabledTextField extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: Colors.black26
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              color: Colors.black26
           ),
         ),
         SizedBox(
