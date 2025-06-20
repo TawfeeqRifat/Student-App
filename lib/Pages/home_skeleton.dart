@@ -266,7 +266,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                       DrawerTiles(tileName: "Help", icon: Icons.help_outline, onPressed: () {  },),
                       DrawerTiles(tileName: "Logout", icon: Icons.logout, iconColor: Colors.redAccent, fontColor: Colors.redAccent,
                         onPressed: () {
-                          Get.offAll(LoginPage());
+                          logOutPopUp();
                         },
                       ),
                     ],
@@ -278,6 +278,59 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
           ],
         )
       )
+    );
+  }
+
+  void logout(){
+    Get.offAll(LoginPage());
+  }
+
+  Future<void> logOutPopUp() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context){
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(16)
+            ),
+            title: Text("Logout Confirmation"),
+            content: Text("Are you sure you want to logout?"),
+            actions: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white.withValues(alpha: 0.75),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  side: BorderSide(color: AppThemeColor),
+
+                ),
+                  onPressed: (){
+                    Get.back();
+                  },
+                  child: Text("Cancel")
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(4),
+                  ),
+                  backgroundColor: AppThemeColor
+                ),
+                onPressed: (){
+                  logout();
+                },
+                child: Text(
+                  "Confirm",
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                )
+              ),
+            ],
+          );
+        }
     );
   }
 

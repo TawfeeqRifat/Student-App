@@ -2,8 +2,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_app/Pages/auth_pages/password_verify_page.dart';
-import 'package:student_app/Pages/home_skeleton.dart';
 
 import 'Pages/auth_pages/login_page.dart';
 import 'Utilities/colors.dart';

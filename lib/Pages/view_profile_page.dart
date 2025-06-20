@@ -51,8 +51,8 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                       decoration: BoxDecoration(
                         color: AppThemeColor.withValues(alpha: 0.8),
                         borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(256),
-                          bottomLeft: Radius.circular(256)
+                          bottomRight: Radius.circular(36),
+                          bottomLeft: Radius.circular(36)
                         )
                       ),
                     ),
@@ -93,6 +93,8 @@ class _ViewProfilePageState extends State<ViewProfilePage> {
                     color: Colors.grey
                 ),
               ),
+
+              SizedBox(height: 16,),
 
               InfoBox(
                 title: "Personal Information",
@@ -198,7 +200,7 @@ class InfoContainer extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             // color: AppThemeColor.withValues(alpha: 0.1)
-          color: Colors.grey.withValues(alpha: 0.2)
+          // color: Colors.grey.withValues(alpha: 0.2)
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
@@ -212,6 +214,10 @@ class InfoContainer extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     fontSize: 12
                 ),
+              ),
+              Divider(
+                height: 4,
+                radius: BorderRadiusGeometry.circular(8),
               ),
               Text(
                 value,
