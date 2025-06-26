@@ -6,6 +6,7 @@ import '../API/api.dart';
 import '../Utilities/colors.dart';
 import '../custom_icons.dart';
 import '../student_info.dart';
+import 'calendar_page.dart';
 
 class HomeSkeleton extends StatefulWidget {
   final int index;
@@ -35,7 +36,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
     pages = <Widget>[
       Container(),
       Container(),
-      Container(),
+      CalendarPage(),
       ProfilePage(data: _currentData,),
     ];
 
