@@ -25,13 +25,14 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
 
   //for holding the user data from the details
   late Data _currentData;
-
+  late int _currentIndex;
   @override
   void initState(){
     super.initState();
 
     //setting the user data
-    _currentData = details[widget.index]!;
+    _currentIndex = widget.index;
+    _currentData = details[_currentIndex]!;
 
     pages = <Widget>[
       Container(),
@@ -45,6 +46,7 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
   //to change the account
   void changeAccount(int index){
     setState(() {
+      _currentIndex = index;
       _currentData = details[index]!;
     });
   }
@@ -78,9 +80,12 @@ class _HomeSkeletonState extends State<HomeSkeleton> {
                 ),
                 context: context,
                 builder: (BuildContext context){
-                  return SwitchProfile(changeAccount: changeAccount, currentIndex: widget.index,);
+                  return SwitchProfile(changeAccount: changeAccount, currentIndex: _currentIndex,);
                 }
               );
+            },
+            onVerticalDragDown: (x){
+              // changeAccount((_currentIndex - 1) % details.keys.length);
             },
             child: Container(
               height: 38,
